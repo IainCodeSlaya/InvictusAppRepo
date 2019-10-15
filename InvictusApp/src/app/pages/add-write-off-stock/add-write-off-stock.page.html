@@ -1,5 +1,11 @@
-<body class="Body">
-  <form class="Form" [formGroup]="addWriteOffForm">
+<ion-header>
+  <ion-toolbar>
+    <ion-title>add-write-off-stock</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="body">
+  <form class="Form" formGroup="addWriteOffForm">
 
 
     <!--WRITE OFF STOCK-->
@@ -10,7 +16,7 @@
           <mat-form-field class="InputWidth">
             <mat-label>Product Name</mat-label>
             <mat-select formControlName="ProductName" #fontSize>
-              <mat-option *ngFor="let product of Products" [value]="product.value">
+              <mat-option *ngFor="let product of Products" value="product.value">
                 {{ product.viewValue }}</mat-option>
             </mat-select>
           </mat-form-field>
@@ -27,10 +33,10 @@
         <!-- Expirey Date -->
         <div class="form-group">
           <mat-form-field class="InputWidth">
-            <input matInput formControlName="WriteOffDate" [matDatepicker]="picker1"
+            <input matInput formControlName="WriteOffDate" matDatepicker="picker1"
               placeholder="Date of Write Off - (dd/mm/yyyy)">
             <!-- <mat-hint>(dd/mm/yyyy)</mat-hint> -->
-            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker-toggle matSuffix for="picker1"></mat-datepicker-toggle>
             <mat-datepicker #picker1></mat-datepicker>
           </mat-form-field>
         </div>
@@ -90,7 +96,7 @@
               <td>
                 <div style="text-align:center">
                   <div>
-                    <webcam [height]="150" [width]="150" [trigger]="triggerObservable"
+                    <webcam height="150" width="150" trigger="triggerObservable"
                       (imageCapture)="handleImage($event)">
                     </webcam>
                     <br />
@@ -131,4 +137,5 @@
   </form>
 
 
-</body>
+
+</ion-content>
