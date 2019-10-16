@@ -32,12 +32,17 @@ import { DataService } from 'src/app/stock/shared/data.service';
 export class AddWriteOffStockPage implements OnInit {
   public webcamImage: WebcamImage = null;
 
+  today = Date.now();
+
   // Camera
   @Output()
   public pictureTaken = new EventEmitter<WebcamImage>();
 
   imageUpload: WebcamImage;
   // Camera
+
+  //date
+  utc = new Date().toJSON().slice(0, 10).replace(/-/g, '/');
 
   addWriteOffForm: FormGroup;
 
@@ -50,7 +55,7 @@ export class AddWriteOffStockPage implements OnInit {
   };
 
 
-  Products = <any>[];
+  Products = [];
 
   constructor(private http: HttpClient, private myProdServ: ProductService, private formBuilder: FormBuilder, private dataService: DataService,
 
@@ -70,7 +75,7 @@ export class AddWriteOffStockPage implements OnInit {
 
 
     //For types dropdown
-    this.Products = this.myProdServ.allProductDD().subscribe(res => {
+    this.myProdServ.allProductDD().subscribe(res => {
       this.Products = res;
       console.log(this.Products);
     });
@@ -83,6 +88,25 @@ export class AddWriteOffStockPage implements OnInit {
     // CaMERA
   }
 
+  addProduct(value) {
+    this.obj.ProductID = value;
+    // console.log(this.obj.ProductID);
+    console.log(value);
+  }
+
+  addWriteOffStock() {//WriteOffStockUnits: string) {
+    console.log(this.obj.WriteOffStockUnits);
+    console.log(this.obj.WriteOffStockReason);
+  }
+
+  // addProduct(ctrl) {
+  //   if (ctrl.selectedIndex === 0) {
+  //     this.obj.ProductID = '';
+  //   } else {
+  //     this.obj.ProductID = this.Products[ctrl.selectedIndex - 1].value;
+  //   }
+  //   console.log(this.obj.ProductID);
+  // }
 
   //ClosePopUp
   // closeAddWriteOffPopUp() {
@@ -95,16 +119,21 @@ export class AddWriteOffStockPage implements OnInit {
 
   WriteOffSubmit() {
 
-    this.obj.ProductID = this.f.ProductName.value;
-    this.obj.WriteOffDate = this.f.WriteOffDate.value;
+    //date
+    this.utc = new Date().toJSON().slice(0, 10).replace(/-/g, '/');
+    this.obj.WriteOffDate = this.utc;
     this.obj.WriteOffProdImage = this.myProdServ.newLink;
-    this.obj.WriteOffStockReason = this.f.WriteOffStockReason.value;
-    this.obj.WriteOffStockUnits = this.f.WriteOffStockUnits.value;
+
+    // this.obj.ProductID = this.f.ProductName.value;
+    // this.obj.WriteOffDate = this.f.WriteOffDate.value;
+    // ;
+    // this.obj.WriteOffStockReason = this.f.WriteOffStockReason.value;
+    // this.obj.WriteOffStockUnits = this.f.WriteOffStockUnits.value;
 
     console.log('HALLO', this.obj.WriteOffProdImage);
 
     this.myProdServ.CreateWriteOff(this.obj).subscribe(res => {
-      console.log(res);
+      console.log('THIS IS OBJECT', this.obj);
       location.reload();
     });
 

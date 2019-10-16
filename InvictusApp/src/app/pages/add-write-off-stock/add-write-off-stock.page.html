@@ -1,141 +1,108 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>add-write-off-stock</ion-title>
+  <ion-toolbar color="erp">
+    <ion-title  >WRITE OFF STOCK</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="body">
-  <form class="Form" formGroup="addWriteOffForm">
+<ion-content>
+  
 
+  <div style="padding: 2%;"> </div>
+  <!-- New Beginnings 2019 -->
 
-    <!--WRITE OFF STOCK-->
-    <h1>Write Off Stock</h1>
-    <p> Please enter write off stock details<p>
+  <ion-list>
+    <ion-item>
+       <ion-select placeholder="Select One" name="viewValue" #viewValue="ngModel" [(ngModel)]="obj.ProductID" class="form-control" (ionChange)="addProduct(viewValue.value)">
+          <ion-select-option *ngFor="let product of Products" value="{{product.value}}">{{product.viewValue}}</ion-select-option>
+      </ion-select>
+      </ion-item>
+  </ion-list>
 
-        <div class="form-group">
-          <mat-form-field class="InputWidth">
-            <mat-label>Product Name</mat-label>
-            <mat-select formControlName="ProductName" #fontSize>
-              <mat-option *ngFor="let product of Products" value="product.value">
-                {{ product.viewValue }}</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
+  <!-- <div class="form-group">
+      <label>Product Name</label>
+        <select name="viewValue" #viewValue="ngModel" [(ngModel)]="obj.ProductID" class="form-control" (change)="addProduct($event.target)">
+          <option value="0">-- Select --</option>
+          <option *ngFor="let product of Products" value="{{product.value}}">{{product.viewValue}}</option>
+        </select>
+    </div> -->
 
+  <div style="padding: 1%;"> </div>
 
-        <!-- Company Name -->
-        <div class="form-group">
-          <mat-form-field class="InputWidth">
-            <input formControlName="WriteOffStockUnits" matInput placeholder="Quantity Being Written Off">
-          </mat-form-field>
-        </div>
+  <ion-item>
+    <ion-label position="floating">Quantity</ion-label>
+    <ion-input name="WriteOffStockUnits" #WriteOffStockUnits="ngModel" [(ngModel)]="obj.WriteOffStockUnits" (ngModelChange)="obj.WriteOffStockUnits = $event" class="form-control"></ion-input>
+  </ion-item>
 
-        <!-- Expirey Date -->
-        <div class="form-group">
-          <mat-form-field class="InputWidth">
-            <input matInput formControlName="WriteOffDate" matDatepicker="picker1"
-              placeholder="Date of Write Off - (dd/mm/yyyy)">
-            <!-- <mat-hint>(dd/mm/yyyy)</mat-hint> -->
-            <mat-datepicker-toggle matSuffix for="picker1"></mat-datepicker-toggle>
-            <mat-datepicker #picker1></mat-datepicker>
-          </mat-form-field>
-        </div>
+  <ion-item>
+      <ion-label position="floating">Reason</ion-label>
+      <ion-input name="WriteOffStockReason" #WriteOffStockReason="ngModel" [(ngModel)]="obj.WriteOffStockReason" (ngModelChange)="obj.WriteOffStockReason = $event" class="form-control"></ion-input>
+    </ion-item>
 
+ 
+  <div style="padding: 1%;"> </div>
 
-
-        <div class="form-group">
-          <mat-form-field class="InputWidth">
-            <textarea formControlName="WriteOffStockReason" matInput placeholder="Reason For Write Off"></textarea>
-          </mat-form-field>
-        </div>
-
-
-
-        
-
-        <!-- <table>
-              <tr> -->
-        <!-- Cancel Button -->
-        <!-- <td>
-                    <input matInput [matDatepicker]="picker1d" placeholder="Supporting Image for Write Off">
-
-                  </td> -->
-        <!-- Add Courier Button -->
-        <!-- <td><button class="CrudButton" mat-raised-button>Upload</button></td> -->
-        <!-- </tr>
-            </table> -->
-
-        <div style="padding: 3%"></div>
-
-        <!-- Camera -->
-
-        <!-- 
+  <!-- <table >
+    <tr>
+      <td>
         <div style="text-align:center">
+          <div>
+            <webcam height="150" width="150" (imageCapture)="handleImage($event)" trigger="triggerObservable">
+            </webcam>
+            <br />
+          </div>
+          <div style="padding: 1%"></div>
+        </div>
+      </td>
+      <td>
+        <div class="snapshot" *ngIf="webcamImage">
+          <img [src]="webcamImage.imageAsDataUrl" />
+        </div>
+      </td>
+    </tr>
+  </table> -->
+
+  
+  <table>
+      <tr>
+        <td>
           <div style="text-align:center">
             <div>
-              <webcam [height]="150" [width]="150" [trigger]="triggerObservable" (imageCapture)="handleImage($event)">
+              <webcam [height]="150" [width]="150" [trigger]="triggerObservable"
+                (imageCapture)="handleImage($event)">
               </webcam>
               <br />
-
-              <button  class="WOSphoto" id="snapshotBtn" (click)="triggerSnapshot();" mat-raised-button>Take A Snapshot</button>
-                        </div>
+              <!-- <button class="WOSphoto" id="snapshotBtn" (click)="triggerSnapshot();">Take A Snapshot</button> -->
+            </div>
             <div style="padding: 1%"></div>
           </div>
+        </td>
+        <td>
           <div class="snapshot" *ngIf="webcamImage">
             <img [src]="webcamImage.imageAsDataUrl" />
           </div>
-        </div> -->
-        <!-- Camera -->
+        </td>
+      </tr>
+    </table>
 
+  <ion-button color="erp" id="snapshotBtn" (click)="triggerSnapshot();" mat-raised-button>Take A
+    Snapshot</ion-button>
 
+    <div style="padding: 1%;"> </div>
 
-        <div style="text-align:center">
+  <table>
+    <tr>
 
-          <table>
-            <tr>
-              <td>
-                <div style="text-align:center">
-                  <div>
-                    <webcam height="150" width="150" trigger="triggerObservable"
-                      (imageCapture)="handleImage($event)">
-                    </webcam>
-                    <br />
-                    <!-- <button class="WOSphoto" id="snapshotBtn" (click)="triggerSnapshot();">Take A Snapshot</button> -->
-                  </div>
-                  <div style="padding: 1%"></div>
-                </div>
-              </td>
-              <td>
-                <div class="snapshot" *ngIf="webcamImage">
-                  <img [src]="webcamImage.imageAsDataUrl" />
-                </div>
-              </td>
-            </tr>
-          </table>
-        </div>
-        <button class="WOSphoto" id="snapshotBtn" (click)="triggerSnapshot();" mat-raised-button>Take A
-          Snapshot</button>
+      <td>
+        <ion-button color="erp" type="button" mat-raised-button (click)="closeAddWriteOffPopUp()">
+          Cancel
+        </ion-button>
+      </td>
 
-
-        <div style="padding: 3%"></div>
-
-        <table>
-          <tr>
-            <!-- Cancel Button -->
-            <td><button type="button" class="CrudButton" mat-raised-button (click)="closeAddWriteOffPopUp()">Cancel
-              </button></td>
-            <!-- Add Courier Button -->
-            <td><button (click)="WriteOffSubmit()" type="submit" class="CrudButton" mat-raised-button>Write Off</button>
-            </td>
-          </tr>
-        </table>
-
-        <!-- Bottom Space Of Screen  -->
-        <div style="padding: 2%"></div>
-        <!--UPDATE PRODUCT -->
-
-  </form>
-
-
+      <td>
+        <ion-button color="erp" (click)="WriteOffSubmit()" type="submit" class="CrudButton" mat-raised-button>Write Off
+        </ion-button>
+      </td>
+    </tr>
+  </table>
 
 </ion-content>
